@@ -1,3 +1,6 @@
+import Weapons.Weapons;
+import java.util.Objects;
+
 public class Orc  {
     private int health;
     private int rage;
@@ -5,7 +8,7 @@ public class Orc  {
     private int evasion;
     private int attackPower;
     private int attackSpeed;
-
+    Weapons sword;
 
     public Orc(int health, int rage, int armor, int evasion, int attackPower, int attackSpeed) {
         this.health = health;
@@ -52,12 +55,36 @@ public class Orc  {
     public void setAttackPower(int attackPower) {
         this.attackPower = attackPower;
     }
+    public void setAttackPowerByWeapon(int attackPower) {
+        this.attackPower += attackPower;
+    }
+
+    public void setWeapon(Weapons weapon) {
+        this.sword = weapon;
+        setAttackSpeedByWeapon(sword.getAttackSpeed());
+        setAttackPowerByWeapon(sword.getAttack());
+    }
+
+    public Weapons getSword() {
+        return sword;
+    }
+
+    public void setAttackSpeed(int attackSpeed) {
+        this.attackSpeed = attackSpeed;
+    }
+    public void setAttackSpeedByWeapon(int attackSpeed) {
+        this.attackSpeed += attackSpeed;
+    }
+
 
     public int attackWithWeapon(Elf elf) {
-        return getAttackPower() - (elf.getEvasion()/getAttackSpeed()) - ((elf.getArmor()*elf.getEvasion()/100)*3) + (getAttackSpeed()/100)*10;
+
+        return getAttackPower() - (elf.getEvasion()/getAttackSpeed()) -
+                ((elf.getArmor()*elf.getEvasion()/100)*3) + (getAttackSpeed()/100)*10 ;
     }
 
     public int castBerserk() {
-        return 15;
+        return 28;
     }
+
 }

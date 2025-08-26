@@ -1,3 +1,8 @@
+import Weapons.Weapons;
+
+import java.util.ArrayList;
+import java.util.Objects;
+
 public class Elf {
     private int health;
     private int mana;
@@ -5,6 +10,7 @@ public class Elf {
     private int evasion;
     private int attackPower;
     private int attackSpeed;
+    Weapons sword;
 
     public Elf(int health, int mana, int armor, int evasion, int attackPower, int attackSpeed) {
         this.health = health;
@@ -48,12 +54,28 @@ public class Elf {
         return health;
     }
 
+    public void setAttackPower(int attackPower) {
+        this.attackPower += attackPower;
+    }
+
+    public void setAttackSpeed(int attackSpeed) {
+        this.attackSpeed += attackSpeed;
+    }
+
+    public void setWeapon(Weapons weapon) {
+        this.sword = weapon;
+        setAttackSpeed(sword.getAttackSpeed());
+        setAttackPower(sword.getAttack());
+    }
+
     public int attackWithWeapon(Orc orc) {
-        return getAttackPower() - (orc.getEvasion()/getAttackSpeed()) - ((orc.getArmor()*orc.getEvasion()/100)*3) + (getAttackSpeed()/100)*10;
+        return getAttackPower() - (orc.getEvasion()/getAttackSpeed()) -
+                ((orc.getArmor()*orc.getEvasion()/100)*3) + (getAttackSpeed()/100)*10;
     }
 
     public int castFireball(Orc orc) {
-        return 65;
+        return 80;
     }
+
 
 }
