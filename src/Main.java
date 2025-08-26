@@ -26,14 +26,12 @@ public class Main {
                 if (nowPlayer.equals("Elurion")) {
                     a = Elurion.attackWithWeapon(Grobul) + rand.nextInt(10);;
                     Grobul.setHealth(Grobul.getHealth() - a);
-                    System.out.println("Орк получил " + a + " урона. " + "У орка осталось " +
-                            Grobul.getHealth() + " здоровья и " + Grobul.getRage() + " ярости.");
+                    System.out.println("Орк получил " + a + " урона. " + SystemMessages.orcDmged(Grobul));
                     System.out.println("Орк атакует");
                 } else if (nowPlayer.equals("Grobul")) {
                     a = Grobul.attackWithWeapon(Elurion) + rand.nextInt(10);;
                     Elurion.setHealth(Elurion.getHealth() - a);
-                    System.out.println("Эльф получил " + a + " урона. " + "У эльфа осталось " +
-                            Elurion.getHealth() + " здоровья b " + Elurion.getMana() + " маны");
+                    System.out.println("Эльф получил " + a + " урона. " + SystemMessages.elfDmged(Elurion));
                     System.out.println("Эльф атакует");
                 }
             } else if (s.equals("castFB")) {
@@ -41,51 +39,46 @@ public class Main {
                     a = Elurion.castFireball(Grobul) + rand.nextInt(10);;
                     Grobul.setHealth(Grobul.getHealth() - a);
                     Elurion.setMana(Elurion.getMana() - 23);
-                    System.out.println("Эльф призвал духов огя! Орк получил " + a + " урона. " + "У орка осталось " +
-                            Grobul.getHealth() + " здоровья и " + Grobul.getRage() + " ярости.");
+                    System.out.println("Эльф призвал духов огя! Орк получил " + a + SystemMessages.elfCastFB(Grobul));
                     System.out.println("Орк атакует");
                     checkFB = false;
                 } else if (nowPlayer.equals("Grobul")) {
-                    System.out.println("Орки предпочитают топор! Вы потратили время и нанесли минимальный урон!");
+                    System.out.println(SystemMessages.orcCastFb);
                     a = Grobul.attackWithWeapon(Elurion);
                     Elurion.setHealth(Elurion.getHealth() - a);
-                    System.out.println("Эльф получил " + a + " урона. " + "У эльфа осталось " +
-                            Elurion.getHealth() + " здоровья и " + Elurion.getMana() + " маны");
+                    System.out.println("Эльф получил " + a + " урона. " + SystemMessages.elfDmged(Elurion));
                     System.out.println("Эльф атакует");
                 } else if (nowPlayer.equals("Elurion") && !checkFB) {
-                    System.out.println("Огненный шар на перезарядке! Вы потратили время и нанесли минимальный урон!");
+                    System.out.println(SystemMessages.elfFailCast);
                     a = Elurion.attackWithWeapon(Grobul);
                     Grobul.setHealth(Grobul.getHealth() - a);
-                    System.out.println("Орк получил " + a + " урона. " + "У орка осталось " +
-                            Grobul.getHealth() + " здоровья и " + Grobul.getRage() + " ярости.");
+                    System.out.println("Орк получил " + a + " урона. " + SystemMessages.orcDmged(Grobul));
                     System.out.println("Орк атакует");
                 }
             } else if (s.equals("castBers") ) {
                 if (nowPlayer.equals("Elurion")) {
-                    System.out.println("Эльфы не впадают в иступление! Вы потратили время и нанесли минимальный урон!");
+                    System.out.println(SystemMessages.elfCastBers);
                     a = Elurion.attackWithWeapon(Grobul);
                     Grobul.setHealth(Grobul.getHealth() - a);
-                    System.out.println("Орк получил " + a + " урона. " + "У орка осталось " +
-                            Grobul.getHealth() + " здоровья и " + Grobul.getRage() + " ярости.");
+                    System.out.println("Орк получил " + a + " урона. " + SystemMessages.orcDmged(Grobul));
                     System.out.println("Орк атакует");
                 } else if (nowPlayer.equals("Grobul") && checkBers) {
                     Grobul.setAttackPower(Grobul.castBerserk() + Grobul.getAttackPower());
                     a = Grobul.attackWithWeapon(Elurion) + rand.nextInt(10);
                     Elurion.setHealth(Elurion.getHealth() - a);
                     Grobul.setRage(Grobul.getRage() - 15);
-                    System.out.println("Орк впал в бешенство! Эльф получил " + a + " урона. У эльфа осталось " +
-                            Elurion.getHealth() + " здоровья b " + Elurion.getMana() + " маны");
+                    System.out.println("Орк впал в бешенство! Эльф получил " + a + SystemMessages.orcCastBers(Elurion));
                     System.out.println("Эльф атакует");
                     checkBers = false;
                 } else if (nowPlayer.equals("Grobul") && !checkBers) {
-                    System.out.println("Берсерк на перезарядке! Вы потратили время и нанесли минимальный урон!");
+                    System.out.println(SystemMessages.orcFailCast);
                     a = Grobul.attackWithWeapon(Elurion);
                     Elurion.setHealth(Elurion.getHealth() - a);
-                    System.out.println("Эльф получил " + a + " урона. " + "У эльфа осталось " +
-                            Elurion.getHealth() + " здоровья b " + Elurion.getMana() + " маны");
+                    System.out.println("Эльф получил " + a + " урона. " + SystemMessages.elfDmged(Elurion));
                     System.out.println("Эльф атакует");
                 }
             }
+
             //if (s.isEmpty() || !s.equals("attackW") || !s.equals("castFB") || !s.equals("castBers")) {
              //   System.out.println("Неверная команда");
             //}
