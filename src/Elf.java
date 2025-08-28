@@ -28,14 +28,15 @@ public class Elf extends Character{
    //     setAttackSpeed(getAttackSpeed() + attackSpeed);
     //}
 
+
+    public int castFireball() {return 80;}
+
+
+
     @Override
     public int attackWithWeapon(Character enemy) {
         return getAttackPower() - (enemy.getEvasion()/getAttackSpeed()) -
-                ((enemy.getArmor()*enemy.getEvasion()/100)*3) + (getAttackSpeed()/100)*10 ;
-    }
-
-    public int castFireball() {
-        return 80;
+                ((enemy.getArmor()*enemy.getEvasion()/100)*3) + getAttackSpeed()/5 ;
     }
 
 

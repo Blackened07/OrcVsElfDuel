@@ -40,8 +40,8 @@ public class SystemMessages {
         public static String orcCastBers (Elf elf) {
             return  " урона. У эльфа осталось " + elf.getHealth() + " здоровья и " + elf.getMana() + " маны";
         }
-        public static String elfCastFB (Orc orc) {
-            return " урона. " + "У орка осталось " + orc.getHealth() + " здоровья и " + orc.getRage() + " ярости.";
+        public static String elfCastFB (Character character) {
+            return " урона. " + "У " + character.getName() + " осталось " + character.getHealth() + " здоровья";
         }
     }
 }

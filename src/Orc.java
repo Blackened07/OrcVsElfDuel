@@ -23,12 +23,13 @@ public class Orc  extends Character{
     @Override
     public int attackWithWeapon(Character enemy) {
         return getAttackPower() - (enemy.getEvasion()/getAttackSpeed()) -
-                ((enemy.getArmor()*enemy.getEvasion()/100)*3) + (getAttackSpeed()/100)*10 ;
+                ((enemy.getArmor()*enemy.getEvasion()/100)*3) + getAttackSpeed()/5 ;
     }
 
     public int castBerserk() {
         return 28;
     }
+
 
 
     public void setSword(Sword sword) {
