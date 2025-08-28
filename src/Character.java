@@ -62,12 +62,4 @@ public abstract class Character {
     public abstract int attackWithWeapon(Character enemy);
 
 
-    public int castBerserk(Character nowPlayer, Orc orc) {
-        if (nowPlayer.equals(orc)) {
-            return 28;
-        } else return 0;
-    }
-    public void setMana (Elf elf, int mana) {
-        elf.setMana(elf.getMana() + mana);
-    }
 }
