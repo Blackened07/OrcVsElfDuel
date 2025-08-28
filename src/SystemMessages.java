@@ -3,7 +3,7 @@ public class SystemMessages {
     static class StartGameMessages {
         public static void elfInfoPlayer1 (Character player1, Elf elf) {
             System.out.println(player1.getName() + " is starting with " + player1.getHealth() + " health, " + elf.getMana() + " mana, " + player1.getAttackPower() + " attack power, " +
-                    player1.getArmor() + " armor, " + player1.getEvasion() + " Evasion, " + player1.getAttackSpeed() + " attack speed");;
+                    player1.getArmor() + " armor, " + player1.getEvasion() + " Evasion, " + player1.getAttackSpeed() + " attack speed");
         }
         public static void orcInfoPlayer2 (Character player2, Orc orc) {
             System.out.println(player2.getName() + " is starting " + player2.getHealth() + " health, " + orc.getRage() + " rage, " + player2.getAttackPower() + " attack power, " +

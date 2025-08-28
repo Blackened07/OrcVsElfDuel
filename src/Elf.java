@@ -34,7 +34,7 @@ public class Elf extends Character{
                 ((enemy.getArmor()*enemy.getEvasion()/100)*3) + (getAttackSpeed()/100)*10 ;
     }
 
-    public int castFireball(Orc orc) {
+    public int castFireball() {
         return 80;
     }
 

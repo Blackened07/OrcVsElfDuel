@@ -58,7 +58,7 @@ public class Main {
             } else if (s.equals("castFB")) {
                 if (nowPlayer.equals(player1) && player1.equals(Elurion)) {
                     if (checkFB) {
-                        a = Elurion.castFireball(Grobul) + rand.nextInt(10);
+                        a = Elurion.castFireball() + rand.nextInt(10);
                         Grobul.setHealth(Grobul.getHealth() - a);
                         Elurion.setMana(Elurion.getMana() - 28);
                         System.out.println(Elurion.getName() + " призвал духов огя! " + Grobul.getName() + " получил " + a + SystemMessages.BattleMessages.elfCastFB(Grobul));
@@ -79,7 +79,7 @@ public class Main {
                     System.out.println(player2.getName() + " атакует");
                 } else if (nowPlayer.equals(player2) && player2.equals(Elurion)) {
                     if (checkFB) {
-                        a = Elurion.castFireball(Grobul) + rand.nextInt(10);
+                        a = Elurion.castFireball() + rand.nextInt(10);
                         Grobul.setHealth(Grobul.getHealth() - a);
                         Elurion.setMana(Elurion.getMana() - 28);
                         System.out.println(Elurion.getName() + " призвал духов огя! " + Grobul.getName() + " получил " + a + SystemMessages.BattleMessages.elfCastFB(Grobul));

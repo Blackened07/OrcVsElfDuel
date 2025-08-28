@@ -11,11 +11,11 @@ public class Mace extends Weapons{
         super(attack, attackSpeed);
         this.health = health;
     }
-    public Mace(int attack, int attackSpeed, int health, int evasion) {
-        super(attack, attackSpeed);
-        this.health = health;
-        this.evasion = evasion;
-    }
+    //public Mace(int attack, int attackSpeed, int health, int evasion) {
+    //    super(attack, attackSpeed);
+    //    this.health = health;
+    //    this.evasion = evasion;
+    //}
 
     public int getHealth() {
         return health;

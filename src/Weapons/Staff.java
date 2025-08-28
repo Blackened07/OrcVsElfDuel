@@ -22,10 +22,6 @@ public class Staff extends Weapons{
         return health;
     }
 
-    public int getEvasion() {
-        return evasion;
-    }
-
     public int getMana() {
         return mana;
     }
