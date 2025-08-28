@@ -1,3 +1,6 @@
+import Weapons.Sword;
+import Weapons.Weapons;
+
 public abstract class Character {
     protected int health;
     protected int armor;
@@ -61,5 +64,8 @@ public abstract class Character {
     }
     public abstract int attackWithWeapon(Character enemy);
 
+    public void setWeapon(Weapons weapon) {
+
+    }
 
 }

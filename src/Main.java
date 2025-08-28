@@ -10,16 +10,18 @@ public class Main {
         //добавить в игру спеллы - доты, станы
         Orc Grobul = new Orc(300, 10, 2, 16, 3, "Grobul", 50);
         Elf Elurion = new Elf(275, 4, 8, 11, 7, "Elurion", 100);
+        Character[] chars = {Grobul, Elurion};
 
-        Sword LongSword = new Sword(35, 10);
-        Sword ShortBlade = new Sword(27, 35, 5);
-        Axe EvilInvader = new Axe(25, 5, 40);
-        Axe GutShredder = new Axe(30, 3, 5);
-        Mace DemolitionHammer = new Mace(45, 2);
-        Mace CraniumBasher = new Mace(33, 8, 20);
-        Dagger SnakeBite = new Dagger(15, 55, 33);
-        Dagger Stinger = new Dagger(18, 47, 24, 55);
-        Staff VoidPrisoner = new Staff(15, 10, 50, 50);
+        Weapons[] weapon = {new Sword("LongSword", 35, 10, 0, 0, 0),
+                new Sword("ShortBlade", 27, 35, 5, 15, 0),
+                new Axe("EvilInvader", 25, 12, 40, 0, 0),
+                new Axe("GutShredder", 30, 9, 5, 0, 0),
+                new Mace("DemolitionHammer", 45, 2, 0, 0, 0),
+                new Mace("CraniumBasher", 33, 8, 20, 0, 0),
+                new Dagger("SnakeBite", 15, 55, 0, 33, 0),
+                new Dagger("Stinger", 18, 40, 36, 55, 0),
+                new Staff("VoidPrisoner", 15, 10, 50, 50, 100)};
+
         Scanner sc = new Scanner(System.in);
         //Choose Hero
         Character player1 = Battle.StartGameProcess.chooseTheHero(sc, Grobul, Elurion);
@@ -29,8 +31,7 @@ public class Main {
         assert player2 != null;
         Character nowPlayer = Battle.StartGameProcess.startGame(player1, player2, Grobul, Elurion);
 
-        Battle.StartGameProcess.chooseWeaponProcess(sc, nowPlayer, player1, player2, Grobul, Elurion, LongSword, ShortBlade, EvilInvader, GutShredder, DemolitionHammer, CraniumBasher,
-                SnakeBite, Stinger, VoidPrisoner);
+        Battle.StartGameProcess.chooseWeaponProcess(sc, nowPlayer, player1, player2, Grobul, Elurion, weapon);
 
         Battle.StartGameProcess.startGame(player1, player2, Grobul, Elurion);
         System.out.println(SystemMessages.StartGameMessages.info);

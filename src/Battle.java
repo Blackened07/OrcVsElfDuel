@@ -1,8 +1,4 @@
-import Weapons.Sword;
-import Weapons.Axe;
-import Weapons.Mace;
-import Weapons.Dagger;
-import Weapons.Staff;
+import Weapons.*;
 
 
 import java.util.Random;
@@ -12,7 +8,7 @@ public class Battle {
     static class StartGameProcess {
         static Random rand = new Random();
 
-        public static Character chooseTheHero (Scanner sc, Orc orc, Elf elf) {
+        public static Character chooseTheHero(Scanner sc, Orc orc, Elf elf) {
             System.out.println("Choose your Hero: Orc Grobul, Elf Elurion");
             String hero = sc.nextLine();
             hero = switch (hero) {
@@ -21,7 +17,7 @@ public class Battle {
                 default -> hero;
             };
             if (hero.equals("Grobul")) return orc;
-            else  if (hero.equals("Elurion")) return elf;
+            else if (hero.equals("Elurion")) return elf;
             else return null;
 
         }
@@ -55,49 +51,45 @@ public class Battle {
         }
 
         public static void chooseWeaponProcess(Scanner sc, Character nowPlayer, Character player1, Character player2, Orc orc, Elf elf,
-                                               Sword longsword, Sword shortBlade, Axe evil, Axe gut, Mace demolition,
-                                               Mace cranium, Dagger snake, Dagger stinger, Staff prisoner) {
+                                               Weapons[] weapon) {
             int count = 0;
-            while(count< 2) {
-            if (nowPlayer.equals(player1)) {
-                StartGameProcess.systemSetWeapon(sc, nowPlayer, orc, elf, longsword, shortBlade,
-                        evil, gut, demolition, cranium, snake, stinger, prisoner);
+            while (count < 2) {
+                if (nowPlayer.equals(player1)) {
+                    StartGameProcess.systemSetWeapon(sc, nowPlayer, orc, elf, weapon);
+                }
+                if (nowPlayer.equals(player2)) {
+                    StartGameProcess.systemSetWeapon(sc, nowPlayer, orc, elf, weapon);
+                }
+                count++;
+                nowPlayer = nowPlayer.equals(player1) ? player2 : player1;
             }
-            if (nowPlayer.equals(player2)) {
-                StartGameProcess.systemSetWeapon(sc, nowPlayer, orc, elf, longsword, shortBlade,
-                        evil, gut, demolition, cranium, snake, stinger, prisoner);
-            }
-            count++;
-            nowPlayer = nowPlayer.equals(player1) ? player2 : player1;
         }
-    }
 
         public static void systemSetWeapon(Scanner scanner, Character nowPlayer, Orc orc, Elf elf,
-                                           Sword longsword, Sword shortblade, Axe evil, Axe gut, Mace demolition,
-                                           Mace cranium, Dagger snake, Dagger stinger, Staff prisoner) {
-            System.out.println(nowPlayer.getName() + ", choose your weapon: \nSWORDS (Orc, Elf)\nLongSword\nShortBlade\nAXES (Orc)\nEvilInvader\nGutShredder" +
-                    "\nMACES (Orc)\nDemolitionHammer\nCraniumBasher\nDAGGERS (Elf)\nSnakeBite\nStinger\nSTAVES (Elf)\nVoidPrisoner");
-            String weapon = scanner.nextLine();
-            if (nowPlayer.equals(elf)) {
-                switch (weapon) {
-                    case "LongSword" -> elf.setSword(longsword);
-                    case "ShortBlade" -> elf.setSword(shortblade, shortblade.getHealth());
-                    case "SnakeBite" -> elf.setDagger(snake,snake.getHealth() );
-                    case "Stinger" -> elf.setDagger(stinger, stinger.getHealth(), stinger.getEvasion());
-                    case "VoidPrisoner" -> elf.setStaff(prisoner, prisoner.getHealth(), prisoner.getMana());
-                }
+                                           Weapons[] weapon) {
+            System.out.println(nowPlayer.getName() + ", choose your weapon: ");
+            for (Weapons weapons : weapon) {
+                System.out.println(" - " + weapons.getName());
             }
-            if (nowPlayer.equals(orc)) {
-                switch (weapon) {
-                    case "LongSword" -> orc.setSword(longsword);
-                    case "ShortBlade" -> orc.setSword(shortblade, shortblade.getHealth());
-                    case "EvilInvader" -> orc.setAxe(evil, evil.getHealth());
-                    case "GutShredder" -> orc.setAxe(gut, gut.getHealth());
-                    case "DemolitionHammer" -> orc.setMace(demolition);
-                    case "CraniumBasher" -> orc.setMace(cranium, cranium.getHealth());
+            String weaponName = scanner.nextLine();
+            String choosenWeapon = "";
+
+                for (Weapons weapons : weapon) {
+                    if (weaponName.equals(weapons.getName())) {
+                        if (nowPlayer.equals(orc)) {
+                            orc.setWeapon(weapons);
+                            choosenWeapon = weapons.getName();
+                            break;
+                        } else if (nowPlayer.equals(elf)) {
+                            elf.setWeapon(weapons);
+                            choosenWeapon = weapons.getName();
+                            break;
+                        }
+                    }
                 }
 
-            }
+                System.out.println(nowPlayer.getName() + "You choose the " + choosenWeapon);
+
         }
     }
 
@@ -105,13 +97,14 @@ public class Battle {
         static int countFB = 0;
         static int countBers = 0;
 
-        public static boolean counterFB (boolean checkFB) {
+        public static boolean counterFB(boolean checkFB) {
             if (!checkFB) {
                 countFB++;
                 return countFB == 6;
             } else return true;
         }
-        public static boolean counterBers (Orc orc, boolean checkBers) {
+
+        public static boolean counterBers(Orc orc, boolean checkBers) {
             if (!checkBers) {
                 countBers++;
                 if (countBers == 4) orc.setAttackPower(orc.getAttackPower() - orc.castBerserk());
@@ -120,4 +113,5 @@ public class Battle {
         }
     }
 }
+
 
