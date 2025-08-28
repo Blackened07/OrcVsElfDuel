@@ -1,81 +1,75 @@
+import Weapons.Sword;
+import Weapons.Dagger;
+import Weapons.Staff;
 import Weapons.Weapons;
 
-import java.util.ArrayList;
-import java.util.Objects;
 
-public class Elf {
-    private int health;
+public class Elf extends Character{
     private int mana;
-    private int armor;
-    private int evasion;
-    private int attackPower;
-    private int attackSpeed;
     Weapons sword;
+    Weapons dagger;
+    Weapons staff;
 
-    public Elf(int health, int mana, int armor, int evasion, int attackPower, int attackSpeed) {
-        this.health = health;
+    public Elf(int health, int armor, int evasion, int attackPower, int attackSpeed, String name, int mana) {
+        super(health, armor, evasion, attackPower, attackSpeed, name);
         this.mana = mana;
-        this.armor = armor;
-        this.evasion = evasion;
-        this.attackPower = attackPower;
-        this.attackSpeed = attackSpeed;
     }
-
-    public int getHealth() {
-        return health;
-    }
-
     public int getMana() {
         return mana;
     }
-
-    public int getArmor() {
-        return armor;
-    }
-
-    public int getEvasion() {
-        return evasion;
-    }
-
-    public int getAttackPower() {
-        return attackPower;
-    }
-
-    public int getAttackSpeed() {
-        return attackSpeed;
-    }
-
     public void setMana(int mana) {
         this.mana = mana;
     }
 
-    public int setHealth(int health) {
-        this.health = health;
-        return health;
-    }
+    //public void setAttackPowerByWeapon(int attackPower) {
+    //    setAttackPower(getAttackPower() + attackPower);
+    //}
+    //public void setAttackSpeedByWeapon(int attackSpeed) {
+   //     setAttackSpeed(getAttackSpeed() + attackSpeed);
+    //}
 
-    public void setAttackPower(int attackPower) {
-        this.attackPower += attackPower;
-    }
-
-    public void setAttackSpeed(int attackSpeed) {
-        this.attackSpeed += attackSpeed;
-    }
-
-    public void setWeapon(Weapons weapon) {
-        this.sword = weapon;
-        setAttackSpeed(sword.getAttackSpeed());
-        setAttackPower(sword.getAttack());
-    }
-
-    public int attackWithWeapon(Orc orc) {
-        return getAttackPower() - (orc.getEvasion()/getAttackSpeed()) -
-                ((orc.getArmor()*orc.getEvasion()/100)*3) + (getAttackSpeed()/100)*10;
+    @Override
+    public int attackWithWeapon(Character enemy) {
+        return getAttackPower() - (enemy.getEvasion()/getAttackSpeed()) -
+                ((enemy.getArmor()*enemy.getEvasion()/100)*3) + (getAttackSpeed()/100)*10 ;
     }
 
     public int castFireball(Orc orc) {
         return 80;
     }
 
+
+
+    public void setSword(Sword sword) {
+        this.sword = sword;
+        setAttackPower(getAttackPower() + sword.getAttack());
+        setAttackSpeed(getAttackSpeed() + sword.getAttackSpeed());
+    }
+    public void setSword(Sword sword, int health) {
+        this.sword = sword;
+        setAttackPower(getAttackPower() + sword.getAttack());
+        setAttackSpeed(getAttackSpeed() + sword.getAttackSpeed());
+        setHealth(getHealth() + health);
+    }
+    public void setDagger(Dagger dagger, int health) {
+        this.dagger = dagger;
+        setAttackPower(getAttackPower() + dagger.getAttack());
+        setAttackSpeed(getAttackSpeed() + dagger.getAttackSpeed());
+        setHealth(getHealth() + health);
+    }
+    public void setDagger(Dagger dagger, int health, int evasion) {
+        this.dagger = dagger;
+        setAttackPower(getAttackPower() + dagger.getAttack());
+        setAttackSpeed(getAttackSpeed() + dagger.getAttackSpeed());
+        setHealth(getHealth() + health);
+        setEvasion(getEvasion() + evasion);
+    }
+    public void setStaff(Staff staff, int health, int mana) {
+        this.staff = staff;
+        setAttackPower(getAttackPower() + staff.getAttack());
+        setAttackSpeed(getAttackSpeed() + staff.getAttackSpeed());
+        setHealth(getHealth() + health);
+        setEvasion(getMana() + mana);
+    }
 
 }

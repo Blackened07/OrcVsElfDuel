@@ -15,4 +15,6 @@ public abstract class Weapons {
     public int getAttackSpeed() {
         return attackSpeed;
     }
+
+
 }
