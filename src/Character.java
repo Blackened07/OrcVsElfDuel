@@ -62,7 +62,8 @@ public abstract class Character {
     public void setAttackSpeed(int attackSpeed) {
         this.attackSpeed = attackSpeed;
     }
-    public abstract int attackWithWeapon(Character enemy);
+    public abstract void attackWithWeapon(Character enemy);
+    public abstract void damage (int dmg);
 
     public void setWeapon(Weapons weapon) {
 

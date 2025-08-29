@@ -48,14 +48,12 @@ public class Main {
             switch (s) {
                 case "attackW" -> {
                     if (nowPlayer.equals(player1)) {
-                        a = player1.attackWithWeapon(player2) + rand.nextInt(10);
-                        player2.setHealth(player2.getHealth() - a);
-                        System.out.println(player2.getName() + " получил " + a + " урона. " + SystemMessages.BattleMessages.player2Dmged(player2, Grobul, Elurion));
+                        player1.attackWithWeapon(player2);
+                        System.out.println(SystemMessages.BattleMessages.player2Dmged(player2, Grobul, Elurion));
                         System.out.println(player2.getName() + " атакует");
                     } else if (nowPlayer.equals(player2)) {
-                        a = player2.attackWithWeapon(player1) + rand.nextInt(10);
-                        player1.setHealth(player1.getHealth() - a);
-                        System.out.println(player1.getName() + " получил " + a + " урона. " + SystemMessages.BattleMessages.player1Dmged(player1, Grobul, Elurion));
+                        player2.attackWithWeapon(player1);
+                        System.out.println(SystemMessages.BattleMessages.player1Dmged(player1, Grobul, Elurion));
                         System.out.println(player1.getName() + " атакует");
                     }
                 }
@@ -63,9 +61,8 @@ public class Main {
                     if (nowPlayer.equals(player1)) {
                         if (nowPlayer.equals(Grobul)){
                             System.out.println(SystemMessages.BattleMessages.orcCastFb);
-                            a = player1.attackWithWeapon(player2);
-                            player2.setHealth(player2.getHealth() - a);
-                            System.out.println(player2.getName() + " получил " + a + " урона. " + SystemMessages.BattleMessages.player2Dmged(player2, Grobul, Elurion));
+                            player1.attackWithWeapon(player2);
+                            System.out.println(SystemMessages.BattleMessages.player2Dmged(player2, Grobul, Elurion));
                             System.out.println(player2.getName() + " атакует");
                         } else if (checkFB && nowPlayer.equals(Elurion)) {
                             a = Elurion.castFireball() + rand.nextInt(10);
@@ -76,18 +73,16 @@ public class Main {
                             checkFB = false;
                         } else {
                             System.out.println(SystemMessages.BattleMessages.elfFailCast);
-                            a = player1.attackWithWeapon(player2);
-                            player2.setHealth(player2.getHealth() - a);
-                            System.out.println(player2.getName() + " получил " + a + " урона. " + SystemMessages.BattleMessages.player2Dmged(player2, Grobul, Elurion));
+                            player1.attackWithWeapon(player2);
+                            System.out.println(SystemMessages.BattleMessages.player2Dmged(player2, Grobul, Elurion));
                             System.out.println(player2.getName() + " атакует");
                         }
 
                     } else if (nowPlayer.equals(player2)) {
                         if (player2.equals(Grobul)) {
                             System.out.println(SystemMessages.BattleMessages.orcCastFb);
-                            a = player2.attackWithWeapon(player1);
-                            player1.setHealth(player1.getHealth() - a);
-                            System.out.println(player1.getName() + " получил " + a + " урона. " + SystemMessages.BattleMessages.player1Dmged(player1, Grobul, Elurion));
+                            player2.attackWithWeapon(player1);
+                            System.out.println(SystemMessages.BattleMessages.player1Dmged(player1, Grobul, Elurion));
                             System.out.println(player1.getName() + " атакует");
                         } else if (checkFB && nowPlayer.equals(Elurion)) {
                             a = Elurion.castFireball() + rand.nextInt(10);
@@ -98,9 +93,8 @@ public class Main {
                             checkFB = false;
                         } else  {
                             System.out.println(SystemMessages.BattleMessages.elfFailCast);
-                            a = Elurion.attackWithWeapon(Grobul);
-                            Grobul.setHealth(Grobul.getHealth() - a);
-                            System.out.println(player1.getName() + " получил " + a + " урона. " + SystemMessages.BattleMessages.player1Dmged(player1, Grobul, Elurion));
+                            Elurion.attackWithWeapon(Grobul);
+                            System.out.println(SystemMessages.BattleMessages.player1Dmged(player1, Grobul, Elurion));
                             System.out.println(player1.getName() + " атакует");
                         }
                     }
@@ -109,46 +103,40 @@ public class Main {
                     if (nowPlayer.equals(player1)) {
                         if (nowPlayer.equals(Elurion)) {
                         System.out.println(SystemMessages.BattleMessages.elfCastBers);
-                        a = player1.attackWithWeapon(player2);
-                        player2.setHealth(player2.getHealth() - a);
-                        System.out.println(player2.getName() + " получил " + a + " урона. " + SystemMessages.BattleMessages.player2Dmged(player2, Grobul, Elurion));
+                        player1.attackWithWeapon(player2);
+                        System.out.println(SystemMessages.BattleMessages.player2Dmged(player2, Grobul, Elurion));
                         System.out.println(player2.getName() + " атакует");
                     } else if ( checkBers && player1.equals(Grobul)) {
                             player1.setAttackPower(Grobul.castBerserk() + Grobul.getAttackPower());
-                            a = Grobul.attackWithWeapon(player2) + rand.nextInt(10);
-                            player2.setHealth(player2.getHealth() - a);
+                            Grobul.attackWithWeapon(player2);
                             Grobul.setRage(Grobul.getRage() - 15);
-                            System.out.println(player1.getName() + " впал в бешенство!" + player2.getName() + " получил " + a + SystemMessages.BattleMessages.orcCastBers(Elurion));
+                            System.out.println(player1.getName() + " впал в бешенство!" + player2.getName() + " получил 3gg3"  + SystemMessages.BattleMessages.orcCastBers(Elurion));
                             System.out.println(player2.getName() + " атакует");
                             checkBers = false;
                         } else {
                             System.out.println(SystemMessages.BattleMessages.orcFailCast);
-                            a = Grobul.attackWithWeapon(player2);
-                            player2.setHealth(Elurion.getHealth() - a);
-                            System.out.println(player2.getName() + " получил " + a + " урона. " + SystemMessages.BattleMessages.player1Dmged(player1, Grobul, Elurion));
+                            Grobul.attackWithWeapon(player2);
+                            System.out.println(SystemMessages.BattleMessages.player1Dmged(player1, Grobul, Elurion));
                             System.out.println(player2.getName() + " атакует");
                         }
                     }
                     if (nowPlayer.equals(player2)) {
                         if (nowPlayer.equals(Elurion)) {
                             System.out.println(SystemMessages.BattleMessages.elfCastBers);
-                            a = Elurion.attackWithWeapon(player1);
-                            player1.setHealth(player1.getHealth() - a);
-                            System.out.println(player1.getName() + " получил " + a + " урона. " + SystemMessages.BattleMessages.player1Dmged(player1, Grobul, Elurion));
+                            Elurion.attackWithWeapon(player1);
+                            System.out.println(SystemMessages.BattleMessages.player1Dmged(player1, Grobul, Elurion));
                             System.out.println(player1.getName() + " атакует");
                         } else if (player2.equals(Grobul) && checkBers) {
                             Grobul.setAttackPower(Grobul.castBerserk() + Grobul.getAttackPower());
-                            a = Grobul.attackWithWeapon(player1) + rand.nextInt(10);
-                            player1.setHealth(player1.getHealth() - a);
+                            Grobul.attackWithWeapon(player1);
                             Grobul.setRage(Grobul.getRage() - 15);
-                            System.out.println(player2.getName() + " впал в бешенство! " + player1.getName() + " получил " + a + SystemMessages.BattleMessages.orcCastBers(Elurion));
+                            System.out.println(player2.getName() + " впал в бешенство! " + player1.getName() + " получил wfwff "  + SystemMessages.BattleMessages.orcCastBers(Elurion));
                             System.out.println(player1.getName() + " атакует");
                             checkBers = false;
                         } else  {
                             System.out.println(SystemMessages.BattleMessages.orcFailCast);
-                            a = Grobul.attackWithWeapon(player1);
-                            player1.setHealth(player1.getHealth() - a);
-                            System.out.println(player1.getName() + " получил " + a + " урона. " + SystemMessages.BattleMessages.player1Dmged(player1, Grobul, Elurion));
+                            Grobul.attackWithWeapon(player1);
+                            System.out.println(SystemMessages.BattleMessages.player1Dmged(player1, Grobul, Elurion));
                             System.out.println(player1.getName() + " атакует");
                         }
                     }
