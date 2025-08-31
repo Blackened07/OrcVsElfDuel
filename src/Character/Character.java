@@ -1,5 +1,8 @@
-import Weapons.Sword;
+package Character;
+
 import Weapons.Weapons;
+
+import java.util.Random;
 
 public abstract class Character {
     protected int health;
@@ -8,6 +11,8 @@ public abstract class Character {
     protected int attackPower;
     protected int attackSpeed;
     protected String name;
+    Weapons weapon;
+    protected String weaponName;
 
 
     public Character(int health, int armor, int evasion, int attackPower, int attackSpeed, String name) {
@@ -35,9 +40,9 @@ public abstract class Character {
         return armor;
     }
 
-   // public void setArmor(int armor) {
-   //     this.armor = armor;
-   // }
+    public void setArmor(int armor) {
+        this.armor = armor;
+    }
 
     public int getEvasion() {
         return evasion;
@@ -62,11 +67,33 @@ public abstract class Character {
     public void setAttackSpeed(int attackSpeed) {
         this.attackSpeed = attackSpeed;
     }
-    public abstract void attackWithWeapon(Character enemy);
-    public abstract void damage (int dmg);
+
+    public String getWeaponName() {
+        return weaponName;
+    }
+
+    public void attackWithWeapon(Character enemy) {
+        int dmg = getAttackPower() - (enemy.getEvasion()/getAttackSpeed()) -
+                ((enemy.getArmor()*enemy.getEvasion()/100)*3) + getAttackSpeed()/5 + new Random().nextInt(10);
+        enemy.damage(dmg);
+        System.out.println(getName() + " dealt " + dmg + " with the " + getWeaponName() + " weapon");
+    }
+
+
+    public void damage(int dmg) {
+        health -= dmg;
+    }
+
 
     public void setWeapon(Weapons weapon) {
-
+        this.weapon = weapon;
+        this.weaponName = weapon.getName();
+        setAttackPower(getAttackPower() + weapon.getAttack());
+        setAttackSpeed(getAttackSpeed() + weapon.getAttackSpeed());
+        setHealth(getHealth() + weapon.getHealth());
+        setEvasion(getEvasion() + weapon.getEvasion());
     }
+    public abstract void getStartMessage ();
+    public abstract void getStatusMessage ();
 
 }
