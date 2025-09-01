@@ -23,8 +23,10 @@ public class Elf extends Character {
         setMana(getMana() - mana);
     }
 
-    public int castFireball() {
-        return 80;
+    @Override
+    public void setWeapon(Weapons weapon) {
+        super.setWeapon(weapon);
+        setMana(getMana() + weapon.getMana());
     }
 
     @Override

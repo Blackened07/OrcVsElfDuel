@@ -34,8 +34,8 @@ public class Battle {
                     rChars[0] = chars[0];
                     rChars[1] = chars[1];
                 } else {
-                    rChars[1] = chars[1];
-                    rChars[0] = chars[0];
+                    rChars[0] = chars[1];
+                    rChars[1] = chars[0];
                 }
         }
 

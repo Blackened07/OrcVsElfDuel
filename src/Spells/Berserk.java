@@ -2,8 +2,6 @@ package Spells;
 import Character.Character;
 import Character.Orc;
 
-import java.util.Random;
-
 public class Berserk extends Spell{
     private final static int RAGE_COST = 15;
     private final static int COOLDOWN = 8;
@@ -30,6 +28,7 @@ public class Berserk extends Spell{
     public void unapply() {
         if (coolDawnRemaining == 4) {
             orc.setAttackPower(orc.getAttackPower() - DMG);
+            System.out.println("Insane is over");
         }
     }
 }

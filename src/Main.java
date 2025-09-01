@@ -1,10 +1,8 @@
+import Spells.*;
 import Weapons.*;
 import Character.Character;
 import Character.Orc;
 import Character.Elf;
-import Spells.Berserk;
-import Spells.Fireball;
-import Spells.Spell;
 
 import java.util.Scanner;
 
@@ -18,7 +16,8 @@ public class Main {
         Orc Grobul = (Orc) chars[0];
         Character[] choosenHeroes = new Character[2];
         Character[] rChars = new Character[2];
-        Weapons[] weapon = {new Sword("LongSword", 35, 10, 0, 0, 0),
+        Weapons[] weapon = {new Staff("null", 0, 0, 0, 0, 0),
+                new Sword("LongSword", 35, 10, 0, 0, 0),
                 new Sword("ShortBlade", 27, 35, 5, 15, 0),
                 new Axe("EvilInvader", 25, 12, 40, 0, 0),
                 new Axe("GutShredder", 30, 9, 5, 0, 0),
@@ -26,9 +25,12 @@ public class Main {
                 new Mace("CraniumBasher", 33, 8, 20, 0, 0),
                 new Dagger("SnakeBite", 15, 55, 0, 33, 0),
                 new Dagger("Stinger", 18, 40, 36, 55, 0),
-                new Staff("VoidPrisoner", 15, 10, 50, 50, 100)};
+                new Staff("VoidPrisoner", 15, 10, 50, 50, 100)
+        };
         Fireball fireball = new Fireball(Elurion);
         Berserk berserk = new Berserk(Grobul);
+        FlamePoison flamePoison = new FlamePoison(Elurion);
+        Disarm disarm = new Disarm(Grobul);
         Scanner sc = new Scanner(System.in);
         //Choose Hero
 
@@ -47,14 +49,17 @@ public class Main {
             String s = sc.nextLine();
             Character enemy = Battle.StartGameProcess.setEnemy(rChars, i);
             fireball.spellCounter();
+            flamePoison.spellCounter();
+            flamePoison.dmgCounter(Grobul);
+            disarm.debuffCounter(Elurion, weapon);
             berserk.spellCounter();
             berserk.unapply();
             switch (s) {
-                case "attackW" -> {
+                case "atkW" -> {
                     rChars[i].attackWithWeapon(enemy);
                     enemy.getStatusMessage();
                 }
-                case "castFB" -> {
+                case "FB" -> {
                     if (rChars[i].equals(Elurion)) {
                         fireball.cast(enemy);
                         enemy.getStatusMessage();
@@ -64,9 +69,30 @@ public class Main {
                         enemy.getStatusMessage();
                     }
                 }
-                case "castBers" -> {
+                case "FP" -> {
+                    if (rChars[i].equals(Elurion)) {
+                        flamePoison.cast(enemy);
+                        enemy.getStatusMessage();
+                    } else {
+                        rChars[i].attackWithWeapon(enemy);
+                        System.out.println(SystemMessages.BattleMessages.orcCastFb);
+                        enemy.getStatusMessage();
+                    }
+                }
+                case "Bers" -> {
                     if (rChars[i].equals(Grobul)) {
                         berserk.apply(Grobul);
+                        rChars[i].attackWithWeapon(enemy);
+                        enemy.getStatusMessage();
+                    } else {
+                        rChars[i].attackWithWeapon(enemy);
+                        System.out.println(SystemMessages.BattleMessages.elfCastBers);
+                        enemy.getStatusMessage();
+                    }
+                }
+                case "dis" -> {
+                    if (rChars[i].equals(Grobul)) {
+                        disarm.apply(enemy, weapon);
                         rChars[i].attackWithWeapon(enemy);
                         enemy.getStatusMessage();
                     } else {

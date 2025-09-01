@@ -13,6 +13,7 @@ public abstract class Character {
     protected String name;
     Weapons weapon;
     protected String weaponName;
+    protected int indexWeapon;
 
 
     public Character(int health, int armor, int evasion, int attackPower, int attackSpeed, String name) {
@@ -72,18 +73,28 @@ public abstract class Character {
         return weaponName;
     }
 
+    public int getIndexWeapon(Weapons[] weapon) {
+        int index = -1;
+        for (int i = 0; i < weapon.length; i++) {
+            if (weapon[i].getName().equals(getWeaponName())) {
+                index = i;
+
+            }
+        } return index;
+
+    }
+
     public void attackWithWeapon(Character enemy) {
         int dmg = getAttackPower() - (enemy.getEvasion()/getAttackSpeed()) -
                 ((enemy.getArmor()*enemy.getEvasion()/100)*3) + getAttackSpeed()/5 + new Random().nextInt(10);
         enemy.damage(dmg);
-        System.out.println(getName() + " dealt " + dmg + " with the " + getWeaponName() + " weapon");
+        System.out.println(getName() + " dealt " + dmg + " damage with the " + getWeaponName() + " weapon");
     }
 
 
     public void damage(int dmg) {
         health -= dmg;
     }
-
 
     public void setWeapon(Weapons weapon) {
         this.weapon = weapon;
@@ -93,6 +104,8 @@ public abstract class Character {
         setHealth(getHealth() + weapon.getHealth());
         setEvasion(getEvasion() + weapon.getEvasion());
     }
+
+
     public abstract void getStartMessage ();
     public abstract void getStatusMessage ();
 

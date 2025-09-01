@@ -1,5 +1,6 @@
 package Spells;
 import Character.Character;
+import Weapons.Weapons;
 
 public class Spell {
     protected final String spellName;
@@ -23,17 +24,21 @@ public class Spell {
         }
         coolDawnRemaining = coolDawn;
     }
-    public void apply(Character self) {
+    public void apply(Character target) {
         if (coolDawnRemaining > 0 ) {
             throw new MyRuntimeException("Spell is not ready yet");
         }
         coolDawnRemaining = coolDawn;
     }
+    public void apply(Character target, Weapons[] weapon){}
     public void unapply() {};
     public void spellCounter () {
         if (coolDawnRemaining > 0 ) {
             --coolDawnRemaining;
         }
     }
+    public void dmgCounter (Character target){}
+    public void debuffCounter (Character target){}
+    public void debuffCounter (Character target, Weapons[] weapon){}
 
 }
