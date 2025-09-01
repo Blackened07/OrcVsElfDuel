@@ -1,13 +1,8 @@
 package Weapons;
 
-public class Sword extends Weapons{
-    private String type = "Sword";
-    public Sword(String name, int attack, int attackSpeed, int health, int evasion, int mana) {
+public class Axe extends Weapons{
+    public Axe(String name, int attack, int attackSpeed, int health, int evasion, int mana) {
         super(name, attack, attackSpeed, health, evasion, mana);
-    }
-
-    public String getType() {
-        return type;
     }
 
     @Override

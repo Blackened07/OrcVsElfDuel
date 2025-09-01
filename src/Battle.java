@@ -1,62 +1,73 @@
-import Weapons.Weapons;
+import Weapons.*;
+import Character.Character;
 
 import java.util.Random;
 import java.util.Scanner;
 
 public class Battle {
-    static Random rand = new Random();
+    static class StartGameProcess {
+        static Random rand = new Random();
 
-    public static String startGame (Orc orc, Elf elf) {
-        int start = rand.nextInt(10);
-        if (start % 2 == 0) {
-            System.out.println("Elf is starting with " + elf.getHealth() + " health, " + elf.getMana() + " mana, " + elf.getAttackPower() + " attack power, " +
-                    elf.getArmor() + " armor, " + elf.getEvasion() + " Evasion, " + elf.getAttackSpeed() + " attack speed");
+        public static void chooseTheHero(Scanner sc, Character[] chars, Character[] choosenHeroes) {
+            int count = 0;
+            int i = 0;
+            int p = 1;
+            while (count < 2) {
+                System.out.println(" Player " + p + ", choose your Hero: ");
+                for (Character j : chars) {
+                    System.out.println(" - " + j.getName());
+                }
+                String hero = sc.nextLine();
+                for (Character h : chars) {
+                    if (hero.equals(h.getName()))
+                        choosenHeroes[i] = h;
+                }
+                count++;
+                i++;
+                p++;
+            }
+        }
 
-            System.out.println("Orc is starting " + orc.getHealth() + " health, " + orc.getRage() + " rage, " + orc.getAttackPower() + " attack power, " +
-                    orc.getArmor() + " armor, " + orc.getEvasion() + " Evasion, " + orc.getAttackSpeed() + " attack speed");
-            return "Elurion";
-        } else {
-            System.out.println("Orc is starting " + orc.getHealth() + " health, " + orc.getRage() + " rage, " + orc.getAttackPower() + " attack power, " +
-                    orc.getArmor() + " armor, " + orc.getEvasion() + " Evasion, " + orc.getAttackSpeed() + " attack speed");
-            System.out.println("Elf is starting with " + elf.getHealth() + " health, " + elf.getMana() + " mana, " + elf.getAttackPower() + " attack power, " +
-                    elf.getArmor() + " armor, " + elf.getEvasion() + " Evasion, " + elf.getAttackSpeed() + " attack speed");
-            return "Grobul";
+        public static void startGame(Character[] chars, Character[] rChars) {
+            int start = rand.nextInt(10);
+                if (start % 2 == 0) {
+                    rChars[0] = chars[0];
+                    rChars[1] = chars[1];
+                } else {
+                    rChars[0] = chars[1];
+                    rChars[1] = chars[0];
+                }
+        }
+
+        public static void SetWeapon(Scanner scanner, Character[] rChar,
+                                           Weapons[] weapon) {
+            int count = 0;
+            int i = 0;
+            while (count < 2) {
+                System.out.println(rChar[i].getName() + ", choose your weapon: ");
+                for (Weapons weapons : weapon) {
+                    System.out.println(" - " + weapons.getName());
+                }
+                String weaponName = scanner.nextLine();
+
+                for (Weapons weapons : weapon) {
+                    if (weaponName.equals(weapons.getName())) {
+                        rChar[i].setWeapon(weapons);
+                    }
+                }
+                count++;
+                i++;
+            }
+            System.out.println(rChar[0].getName() + " chose the " + rChar[0].getWeaponName() + "\n" + rChar[1].getName() + " chose the " + rChar[1].getWeaponName() );
+        }
+        public static Character setEnemy(Character[] chars, int i) {
+            if (i==0) return chars[1];
+            else return chars[0];
         }
     }
-    public static void chooseWeapon (Scanner scanner, String nowPlayer, Orc orc, Elf elf, Weapons longsword, Weapons shortblade) {
-        System.out.println(nowPlayer + ", choose your weapon: LongSword or ShortBlade");
-        String weapon = scanner.nextLine();
-        if (nowPlayer.equals("Elurion") && weapon.equals("LongSword")) {
-            elf.setWeapon(longsword);
-        }
-        else if (nowPlayer.equals("Elurion") && weapon.equals("ShortBlade")) {
-            elf.setWeapon(shortblade);
-        }
-        else if (nowPlayer.equals("Grobul") && weapon.equals("LongSword")) {
-            orc.setWeapon(longsword);
-        }
-        else if (nowPlayer.equals("Grobul") && weapon.equals("ShortBlade")) {
-            orc.setWeapon(shortblade);
-        }
-
-    }
 
 
-    static int countFB = 0;
-    static int countBers = 0;
 
-    public static boolean counterFB (boolean checkFB) {
-        if (!checkFB) {
-            countFB++;
-            return countFB == 6;
-        } else return true;
-    }
-    public static boolean counterBers (Orc orc, boolean checkBers) {
-        if (!checkBers) {
-            countBers++;
-            if (countBers == 4) orc.setAttackPower(orc.getAttackPower() - orc.castBerserk());
-            return countBers == 8;
-        } else return true;
-    }
 }
+
 

@@ -1,13 +1,9 @@
 package Weapons;
 
-public class Sword extends Weapons{
-    private String type = "Sword";
-    public Sword(String name, int attack, int attackSpeed, int health, int evasion, int mana) {
-        super(name, attack, attackSpeed, health, evasion, mana);
-    }
+public class Mace extends Weapons{
 
-    public String getType() {
-        return type;
+    public Mace(String name, int attack, int attackSpeed, int health, int evasion, int mana) {
+        super(name, attack, attackSpeed, health, evasion, mana);
     }
 
     @Override
@@ -28,11 +24,6 @@ public class Sword extends Weapons{
     @Override
     public void setAttackSpeed(int attackSpeed) {
         super.setAttackSpeed(attackSpeed);
-    }
-
-    @Override
-    public int getHealth() {
-        return super.getHealth();
     }
 
     @Override
@@ -63,5 +54,9 @@ public class Sword extends Weapons{
     @Override
     public int getAttackSpeed() {
         return super.getAttackSpeed();
+    }
+
+    public int getHealth() {
+        return health;
     }
 }

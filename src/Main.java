@@ -1,107 +1,113 @@
-import Weapons.Sword;
+import Spells.*;
+import Weapons.*;
+import Character.Character;
+import Character.Orc;
+import Character.Elf;
 
-import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         //Вводим команды attackW, castFB, castBers
-        Orc Grobul = new Orc(300, 50, 10, 20, 16, 20);
-        Elf Elurion = new Elf(275, 100, 4, 80, 11, 70);
-        Sword LongSword = new Sword(35, 10);
-        Sword ShortBlade = new Sword(27, 35);
+        //добавить в игру спеллы - доты, станы
+        Character[] chars = {new Orc(300, 10, 2, 16, 3, "Grobul", 50),
+                new Elf(275, 4, 8, 11, 7, "Elurion", 100)};
+        Elf Elurion = (Elf) chars[1];
+        Orc Grobul = (Orc) chars[0];
+        Character[] choosenHeroes = new Character[2];
+        Character[] rChars = new Character[2];
+        Weapons[] weapon = {new Staff("null", 0, 0, 0, 0, 0),
+                new Sword("LongSword", 35, 10, 0, 0, 0),
+                new Sword("ShortBlade", 27, 35, 5, 15, 0),
+                new Axe("EvilInvader", 25, 12, 40, 0, 0),
+                new Axe("GutShredder", 30, 9, 5, 0, 0),
+                new Mace("DemolitionHammer", 45, 2, 0, 0, 0),
+                new Mace("CraniumBasher", 33, 8, 20, 0, 0),
+                new Dagger("SnakeBite", 15, 55, 0, 33, 0),
+                new Dagger("Stinger", 18, 40, 36, 55, 0),
+                new Staff("VoidPrisoner", 15, 10, 50, 50, 100)
+        };
+        Fireball fireball = new Fireball(Elurion);
+        Berserk berserk = new Berserk(Grobul);
+        FlamePoison flamePoison = new FlamePoison(Elurion);
+        Disarm disarm = new Disarm(Grobul);
         Scanner sc = new Scanner(System.in);
-        String nowPlayer = Battle.startGame(Grobul, Elurion);
-        System.out.println(nowPlayer);
-        int count = 0;
-        while (count < 2) {
+        //Choose Hero
 
-            if (nowPlayer.equals("Elurion")) {
-                Battle.chooseWeapon(sc, nowPlayer, Grobul, Elurion, LongSword, ShortBlade);
-            }
-            if (nowPlayer.equals("Grobul")) {
-                Battle.chooseWeapon(sc, nowPlayer, Grobul, Elurion, LongSword, ShortBlade);
-            }
-            count++;
-            nowPlayer = nowPlayer.equals("Elurion") ? "Grobul" : "Elurion";
-        }
-        Battle.startGame(Grobul, Elurion);
-        System.out.println(SystemMessages.info);
-        System.out.println(nowPlayer + " attack first");
-        Random rand = new Random();
+        Battle.StartGameProcess.chooseTheHero(sc, chars, choosenHeroes);
+        //definition of random
+        Battle.StartGameProcess.startGame(choosenHeroes, rChars);
+        //SetWeapon to char [0] & [1]
+        Battle.StartGameProcess.SetWeapon(sc, rChars, weapon);
+        rChars[0].getStartMessage();
+        rChars[1].getStartMessage();
+        System.out.println(SystemMessages.StartGameMessages.info);
 
-        boolean checkFB = true;
-        boolean checkBers = true;
-
-        while (Grobul.getHealth() > 0 && Elurion.getHealth() > 0) {
-            int a;
+        int i = 0;
+        while (rChars[0].getHealth() > 0 && rChars[1].getHealth() > 0) {
+            System.out.println(rChars[i].getName() + " attack now");
             String s = sc.nextLine();
-            checkFB = Battle.counterFB(checkFB);
-            checkBers = Battle.counterBers(Grobul, checkBers);
-            if (s.equals("attackW")) {
-                if (nowPlayer.equals("Elurion")) {
-                    a = Elurion.attackWithWeapon(Grobul) + rand.nextInt(10);
-                    ;
-                    Grobul.setHealth(Grobul.getHealth() - a);
-                    System.out.println("Орк получил " + a + " урона. " + SystemMessages.orcDmged(Grobul));
-                    System.out.println("Орк атакует");
-                } else if (nowPlayer.equals("Grobul")) {
-                    a = Grobul.attackWithWeapon(Elurion) + rand.nextInt(10);
-                    ;
-                    Elurion.setHealth(Elurion.getHealth() - a);
-                    System.out.println("Эльф получил " + a + " урона. " + SystemMessages.elfDmged(Elurion));
-                    System.out.println("Эльф атакует");
+            Character enemy = Battle.StartGameProcess.setEnemy(rChars, i);
+            fireball.spellCounter();
+            flamePoison.spellCounter();
+            flamePoison.dmgCounter(Grobul);
+            disarm.debuffCounter(Elurion, weapon);
+            berserk.spellCounter();
+            berserk.unapply();
+            switch (s) {
+                case "atkW" -> {
+                    rChars[i].attackWithWeapon(enemy);
+                    enemy.getStatusMessage();
                 }
-            } else if (s.equals("castFB")) {
-                if (nowPlayer.equals("Elurion") && checkFB) {
-                    a = Elurion.castFireball(Grobul) + rand.nextInt(10);
-                    ;
-                    Grobul.setHealth(Grobul.getHealth() - a);
-                    Elurion.setMana(Elurion.getMana() - 28);
-                    System.out.println("Эльф призвал духов огя! Орк получил " + a + SystemMessages.elfCastFB(Grobul));
-                    System.out.println("Орк атакует");
-                    checkFB = false;
-                } else if (nowPlayer.equals("Grobul")) {
-                    System.out.println(SystemMessages.orcCastFb);
-                    a = Grobul.attackWithWeapon(Elurion);
-                    Elurion.setHealth(Elurion.getHealth() - a);
-                    System.out.println("Эльф получил " + a + " урона. " + SystemMessages.elfDmged(Elurion));
-                    System.out.println("Эльф атакует");
-                } else if (nowPlayer.equals("Elurion") && !checkFB) {
-                    System.out.println(SystemMessages.elfFailCast);
-                    a = Elurion.attackWithWeapon(Grobul);
-                    Grobul.setHealth(Grobul.getHealth() - a);
-                    System.out.println("Орк получил " + a + " урона. " + SystemMessages.orcDmged(Grobul));
-                    System.out.println("Орк атакует");
+                case "FB" -> {
+                    if (rChars[i].equals(Elurion)) {
+                        fireball.cast(enemy);
+                        enemy.getStatusMessage();
+                    } else {
+                        rChars[i].attackWithWeapon(enemy);
+                       System.out.println(SystemMessages.BattleMessages.orcCastFb);
+                        enemy.getStatusMessage();
+                    }
                 }
-            } else if (s.equals("castBers")) {
-                if (nowPlayer.equals("Elurion")) {
-                    System.out.println(SystemMessages.elfCastBers);
-                    a = Elurion.attackWithWeapon(Grobul);
-                    Grobul.setHealth(Grobul.getHealth() - a);
-                    System.out.println("Орк получил " + a + " урона. " + SystemMessages.orcDmged(Grobul));
-                    System.out.println("Орк атакует");
-                } else if (nowPlayer.equals("Grobul") && checkBers) {
-                    Grobul.setAttackPower(Grobul.castBerserk() + Grobul.getAttackPower());
-                    a = Grobul.attackWithWeapon(Elurion) + rand.nextInt(10);
-                    Elurion.setHealth(Elurion.getHealth() - a);
-                    Grobul.setRage(Grobul.getRage() - 15);
-                    System.out.println("Орк впал в бешенство! Эльф получил " + a + SystemMessages.orcCastBers(Elurion));
-                    System.out.println("Эльф атакует");
-                    checkBers = false;
-                } else if (nowPlayer.equals("Grobul") && !checkBers) {
-                    System.out.println(SystemMessages.orcFailCast);
-                    a = Grobul.attackWithWeapon(Elurion);
-                    Elurion.setHealth(Elurion.getHealth() - a);
-                    System.out.println("Эльф получил " + a + " урона. " + SystemMessages.elfDmged(Elurion));
-                    System.out.println("Эльф атакует");
+                case "FP" -> {
+                    if (rChars[i].equals(Elurion)) {
+                        flamePoison.cast(enemy);
+                        enemy.getStatusMessage();
+                    } else {
+                        rChars[i].attackWithWeapon(enemy);
+                        System.out.println(SystemMessages.BattleMessages.orcCastFb);
+                        enemy.getStatusMessage();
+                    }
                 }
+                case "Bers" -> {
+                    if (rChars[i].equals(Grobul)) {
+                        berserk.apply(Grobul);
+                        rChars[i].attackWithWeapon(enemy);
+                        enemy.getStatusMessage();
+                    } else {
+                        rChars[i].attackWithWeapon(enemy);
+                        System.out.println(SystemMessages.BattleMessages.elfCastBers);
+                        enemy.getStatusMessage();
+                    }
+                }
+                case "dis" -> {
+                    if (rChars[i].equals(Grobul)) {
+                        disarm.apply(enemy, weapon);
+                        rChars[i].attackWithWeapon(enemy);
+                        enemy.getStatusMessage();
+                    } else {
+                        rChars[i].attackWithWeapon(enemy);
+                        System.out.println(SystemMessages.BattleMessages.elfCastBers);
+                        enemy.getStatusMessage();
+                    }
+                }
+                default -> System.out.println("You entered bullshit and you are missing your turn");
             }
-
-            //if (s.isEmpty() || !s.equals("attackW") || !s.equals("castFB") || !s.equals("castBers")) {
-            //   System.out.println("Неверная команда");
-            //}
-            nowPlayer = nowPlayer.equals("Elurion") ? "Grobul" : "Elurion";
+            i++;
+            if (i == 2) {
+                i = 0;
+            }
         }
+
     }
 }
